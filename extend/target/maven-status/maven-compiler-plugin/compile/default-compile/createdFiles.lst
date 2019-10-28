@@ -1,0 +1,5 @@
+cn\aesop\extend\plugin\UseLombokPlugin.class
+cn\aesop\extend\comment\EmptyCommentGenerator.class
+cn\aesop\extend\comment\MySQLCommentGenerator.class
+cn\aesop\extend\resolver\MyJavaTypeResolverDefaultImpl.class
+cn\aesop\extend\plugin\AddExtendDaoPlugin.class

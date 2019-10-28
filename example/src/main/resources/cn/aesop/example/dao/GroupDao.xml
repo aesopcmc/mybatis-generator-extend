@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.aesop.example.dao.GroupDao">
+  <!--
+    《扩展Dao操作，由Mybatis Generator插件自动生成，多次生成，不会覆盖》
+    这是一个继承自父xxxMapper.xml的配置文件，扩展的sql语句操作都放在这个文件
+    注意：不要使用与父mapper相同的statement（select、insert、update、delete），会被覆盖，而sql、resultMap不会覆盖
+    generator date：2019-10-26.
+  -->
+  <resultMap id="BaseResultMap" type="cn.aesop.example.generator.model.Group">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="name" jdbcType="VARCHAR" property="name" />
+    <result column="desc" jdbcType="VARCHAR" property="desc" />
+    <result column="uuid" jdbcType="VARCHAR" property="uuid" />
+    <result column="type" jdbcType="CHAR" property="type" />
+    <result column="company_license" jdbcType="VARCHAR" property="companyLicense" />
+    <result column="root_id" jdbcType="INTEGER" property="rootId" />
+    <result column="parent_id" jdbcType="INTEGER" property="parentId" />
+    <result column="create_user" jdbcType="INTEGER" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user" jdbcType="INTEGER" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="default_flag" jdbcType="TINYINT" property="defaultFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, name, desc, uuid, type, company_license, root_id, parent_id, create_user, create_time, update_user, update_time, default_flag
+  </sql>
+  <!-- 自定义 -->
+
+</mapper>

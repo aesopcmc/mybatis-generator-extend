@@ -1,0 +1,7 @@
+cn\aesop\example\generator\mapper\GroupMapper.class
+cn\aesop\example\generator\model\GroupExample.class
+cn\aesop\example\dao\GroupDao.class
+cn\aesop\example\generator\model\GroupExample$GeneratedCriteria.class
+cn\aesop\example\generator\model\GroupExample$Criteria.class
+cn\aesop\example\generator\model\Group.class
+cn\aesop\example\generator\model\GroupExample$Criterion.class

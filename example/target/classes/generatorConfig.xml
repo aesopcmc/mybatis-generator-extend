@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+    <!--最全配置和说明请参考（简书）：https://www.jianshu.com/p/e09d2370b796 -->
+    <!--<properties resource="application.properties"></properties>-->
+    <!-- 数据库驱动 -->
+    <!-- 此路径为开发机器上 mysql-connector-java-x.x.x.jar 包所在路径 -->
+    <!--<classPathEntry location="${spring.datasource.driverLocation}"/>-->
+
+    <context id="DB2Tables" targetRuntime="MyBatis3" defaultModelType="flat">
+        <!--
+             自动识别数据库关键字，默认false，如果设置为true，根据SqlReservedWords中定义的关键字列表；
+            一般保留默认值，遇到数据库关键字（Java关键字），使用columnOverride覆盖
+            beginningDelimiter和endingDelimiter：指明数据库的用于标记数据库对象名的符号，比如ORACLE就是双引号，MYSQL默认是`反引号；
+        -->
+        <property name="autoDelimitKeywords" value="true"/>
+        <property name="beginningDelimiter" value="`"/>
+        <property name="endingDelimiter" value="`"/>
+
+        <!--自定义插件-->
+        <plugin type="cn.aesop.extend.plugin.UseLombokPlugin" />
+        <plugin type="cn.aesop.extend.plugin.AddExtendDaoPlugin">
+            <property name="baseDir" value="${plugin.base.dir}"/>
+            <property name="targetProject" value="src/main/java"/>
+            <property name="targetProjectXml" value="src/main/resources"/>
+            <property name="targetPackage" value="${plugin.dao.package}"/>
+        </plugin>
+
+
+        <commentGenerator type="cn.aesop.extend.comment.MySQLCommentGenerator">
+            <property name="suppressDate" value="true"/>
+            <!-- 是否去除自动生成的注释 true：是 ： false:否 -->
+            <!--<property name="suppressAllComments" value="true"/>-->
+            <property name="addRemarkComments" value="true"/>
+        </commentGenerator>
+
+        <!-- 数据库链接URL，用户名、密码  -->
+        <jdbcConnection
+                driverClass="${mybatis.generator.jdbcDriver}"
+                connectionURL="${mybatis.generator.jdbcURL}"
+                userId="${mybatis.generator.jdbcUserId}"
+                password="${mybatis.generator.jdbcPassword}">
+            <!--设置为true 才能显示类注释-->
+            <property name="useInformationSchema" value="true" />
+        </jdbcConnection>
+
+        <javaTypeResolver type="cn.aesop.extend.resolver.MyJavaTypeResolverDefaultImpl">
+            <property name="forceBigDecimals" value="false"/>
+        </javaTypeResolver>
+
+        <!-- 生成模型的包名和位置 targetProject='MAVEN' 表示生成到target目录 targetProject="src/main/java"-->
+        <javaModelGenerator targetPackage="${model.package}" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+            <property name="trimStrings" value="true"/>
+        </javaModelGenerator>
+
+        <!-- 生成映射文件xml 的包名和位置 -->
+        <sqlMapGenerator targetPackage="${mapper.xml.package}" targetProject="src/main/resources">
+            <property name="enableSubPackages" value="true"/>
+        </sqlMapGenerator>
+
+        <!-- 生成DAO的包名和位置 -->
+        <!--
+        客户端代码，生成易于使用的针对Model对象和XML配置文件 的代码
+            type="ANNOTATEDMAPPER",生成Java Model 和基于注解的Mapper对象
+            type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
+            type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${mapper.package}" targetProject="src/main/java">
+            <property name="enableSubPackages" value="true"/>
+        </javaClientGenerator>
+
+        <!--
+            要生成的表 tableName 是数据库中的表名或视图名
+            domainObjectName 是实体类名
+            delimitIdentifiers 表名添加分隔符，建议所有表统一添加，避免因带有关键字的表名而出错
+         -->
+        <!--例子-->
+        <table tableName="group"
+               delimitIdentifiers="true"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+            <!--添加枚举类型映射，可选-->
+            <!--<columnOverride column="model_name" jdbcType="VARCHAR" javaType="cn.issuetracker.group.eumn.ModelNameEnum"/>-->
+        </table>
+
+
+    </context>
+</generatorConfiguration>

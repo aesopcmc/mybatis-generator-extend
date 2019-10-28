@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>mybatis-generator-extend</artifactId>
+        <groupId>cn.aesop</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>example</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.16.18</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>1.2.0</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-logging</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+    <properties>
+        <!--
+            【mybatis.generator插件相关参数设置】
+            更多参数配置请参看http://mybatis.org/generator/running/runningWithMaven.html -> Parameter Reference
+        -->
+        <mybatis.generator.verbose>true</mybatis.generator.verbose>
+        <!--覆盖已存在的文件-->
+        <mybatis.generator.overwrite>true</mybatis.generator.overwrite>
+        <!--链接数据库信息-->
+        <mybatis.generator.jdbcDriver>com.mysql.jdbc.Driver</mybatis.generator.jdbcDriver>
+        <mybatis.generator.jdbcURL><![CDATA[jdbc:mysql://10.0.0.107:3306/issuetracker?useUnicode=true&characterEncoding=utf8]]></mybatis.generator.jdbcURL>
+        <mybatis.generator.jdbcUserId>root</mybatis.generator.jdbcUserId>
+        <mybatis.generator.jdbcPassword>root</mybatis.generator.jdbcPassword>
+        <!-- 生成Model类的位置 -->
+        <model.package>cn.aesop.example.generator.model</model.package>
+        <!-- 生成Mapper类的位置 -->
+        <mapper.package>cn.aesop.example.generator.mapper</mapper.package>
+        <!-- 生成Mapper xml文件位置,-->
+        <mapper.xml.package>cn.aesop.example.generator.mapper</mapper.xml.package>
+        <!-- 插件配置，生成扩展Dao文件的位置 -->
+        <plugin.base.dir>${basedir}</plugin.base.dir>
+        <plugin.dao.package>cn.aesop.example.dao</plugin.dao.package>
+    </properties>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.mybatis.generator</groupId>
+                <artifactId>mybatis-generator-maven-plugin</artifactId>
+                <version>1.3.5</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>mysql</groupId>
+                        <artifactId>mysql-connector-java</artifactId>
+                        <version>5.1.21</version>
+                    </dependency>
+                    <dependency>
+                        <groupId>cn.aesop</groupId>
+                        <artifactId>extend</artifactId>
+                        <version>1.0</version>
+                        <scope>system</scope>
+                        <systemPath>${basedir}/../extend-1.0-SNAPSHOT.jar</systemPath>
+                    </dependency>
+                </dependencies>
+            </plugin>
+        </plugins>
+    </build>
+</project>
