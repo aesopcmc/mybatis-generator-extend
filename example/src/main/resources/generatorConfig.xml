@@ -89,7 +89,5 @@
             <!--添加枚举类型映射，可选-->
             <columnOverride column="model_name" jdbcType="VARCHAR" javaType="cn.aesop.example.enums.ModelNameEnum"/>
         </table>
-
-
     </context>
 </generatorConfiguration>

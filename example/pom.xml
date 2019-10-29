@@ -29,6 +29,7 @@
             </exclusions>
         </dependency>
     </dependencies>
+
     <properties>
         <!--
             【mybatis.generator插件相关参数设置】
