@@ -12,8 +12,8 @@ import java.util.List;
  * 使用Lombok注解替换Getter、Setter方法
  *
  * 使用方法：
- * 在generatorConfig.xml中的Content内添加该插件 ，四个属性值必传，如：
- * <extend type="aesop.extend.extend.UseLombokPlugin" />
+ * 在generatorConfig.xml中的Content内添加该插件 如：
+ * <plugin type="aesop.extend.extend.UseLombokPlugin" />
  *
  * @author Aesop(chao_c_c @ 163.com)
  * @date 2019/10/24 15:04
