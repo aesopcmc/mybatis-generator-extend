@@ -7,7 +7,7 @@ import java.sql.Types;
 
 /**
  * 数据库类型到JAVA类型映射
- * 通过标签指定，如：<javaTypeResolver type="MyJavaTypeResolverDefaultImpl"/>
+ * 通过标签指定，如：<javaTypeResolver type="cn.aesop.extend.resolver.MyJavaTypeResolverDefaultImpl"/>
  * @author Aesop(chao_c_c @ 163.com)
  * @date 2019/10/21 17:08
  */

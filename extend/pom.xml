@@ -21,6 +21,7 @@
     </dependencies>
 
     <build>
+        <finalName>mybatis-generator-extend</finalName>
         <plugins>
             <!-- 打Jar包插件 -->
             <plugin>

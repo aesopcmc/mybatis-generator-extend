@@ -13,7 +13,7 @@ import java.util.List;
  *
  * 使用方法：
  * 在generatorConfig.xml中的Content内添加该插件 如：
- * <plugin type="aesop.extend.extend.UseLombokPlugin" />
+ * <plugin type="cn.aesop.extend.plugin.UseLombokPlugin" />
  *
  * @author Aesop(chao_c_c @ 163.com)
  * @date 2019/10/24 15:04
@@ -53,5 +53,7 @@ public class UseLombokPlugin extends PluginAdapter {
                                               ModelClassType modelClassType) {
         return false;
     }
+
+
 
 }

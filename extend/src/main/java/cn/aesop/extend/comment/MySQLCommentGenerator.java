@@ -16,7 +16,7 @@ import java.util.Properties;
  * 在generatorConfig.xml中的Content内添加该插件，属性addRemarkComments 必须设置为true才能生效，如下：
  * <content ...>
  *     ...
- *     <commentGenerator type="MySQLCommentGenerator">
+ *     <commentGenerator type="cn.aesop.extend.comment.MySQLCommentGenerator">
  *      <property name="addRemarkComments" value="true"/>
  *     </commentGenerator
  *     ...
@@ -42,8 +42,8 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         String author = "Mybatis Generator";//properties.getProperty("author");
-        String dateFormat = properties.getProperty("dateFormat", "yyyy-MM-dd");
-        SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
+        // String dateFormat = properties.getProperty("dateFormat", "yyyy-MM-dd");
+        // SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
 
         // 获取表注释
         String remarks = introspectedTable.getRemarks();
@@ -53,7 +53,7 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
         topLevelClass.addJavaDocLine(" * " + tableName);
         topLevelClass.addJavaDocLine(" * ");
         topLevelClass.addJavaDocLine(" * @author " + author);
-        topLevelClass.addJavaDocLine(" * @date " + dateFormatter.format(new Date()));
+        // topLevelClass.addJavaDocLine(" * @date " + dateFormatter.format(new Date()));
         topLevelClass.addJavaDocLine(" */");
     }
 

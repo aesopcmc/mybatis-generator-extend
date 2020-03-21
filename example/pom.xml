@@ -71,7 +71,7 @@
                         <artifactId>extend</artifactId>
                         <version>1.0</version>
                         <scope>system</scope>
-                        <systemPath>${basedir}/../extend-1.0-SNAPSHOT.jar</systemPath>
+                        <systemPath>${basedir}/../mybatis-generator-extend.jar</systemPath>
                     </dependency>
                 </dependencies>
             </plugin>
