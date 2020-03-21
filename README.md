@@ -2,9 +2,9 @@
 扩展mybatis generator的使用：
 
 # 使用步骤
-1.打包extend模块：mvn clean package -pl extend
-2.从target拷贝打包后的文件mybatis-generator-extend.jar 到需要的位置
-3.在mybatis generator插件中配置指定jar位置
+## 1.打包extend模块：mvn clean package -pl extend
+## 2.从target拷贝打包后的文件mybatis-generator-extend.jar 到需要的位置
+## 3.在mybatis generator插件中配置指定jar位置
 ```xml
 <build>
         <plugins>
