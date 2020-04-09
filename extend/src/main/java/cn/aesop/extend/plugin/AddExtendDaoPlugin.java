@@ -249,10 +249,10 @@ public class AddExtendDaoPlugin extends PluginAdapter {
         FullyQualifiedJavaType modelJavaType = new FullyQualifiedJavaType(mapperInterfaceType);
         dto.addImportedType(modelJavaType);
 
-        //导入注解包、并添加注解
-        FullyQualifiedJavaType importType = new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper");
-        dto.addImportedType(importType);
-        dto.addAnnotation("@Mapper");
+        //导入注解包、并添加@Mapper注解
+        // FullyQualifiedJavaType importType = new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper");
+        // dto.addImportedType(importType);
+        // dto.addAnnotation("@Mapper");
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         dto.addJavaDocLine("/**\n" +
