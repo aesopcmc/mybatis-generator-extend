@@ -60,5 +60,7 @@
 ```
 ## 4.在resources添加generatorConfig.xml配置文件，请参考example模块
 
+## 5.打开example模块，运行mybatis-generator插件，生成文件
+
 github项目地址https://github.com/aesopcmc/mybatis-generator-extend
 CSDN博客地址：https://blog.csdn.net/u014438244/article/details/102776762
