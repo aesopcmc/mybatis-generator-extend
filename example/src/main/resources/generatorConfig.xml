@@ -89,5 +89,18 @@
             <!--添加枚举类型映射，可选-->
             <columnOverride column="model_name" jdbcType="VARCHAR" javaType="cn.aesop.example.enums.ModelNameEnum"/>
         </table>
+
+        <table tableName="transition_change_record"
+               delimitIdentifiers="true"
+               enableCountByExample="true"
+               enableUpdateByExample="true"
+               enableDeleteByExample="true"
+               enableSelectByExample="true"
+               selectByExampleQueryId="true">
+            <generatedKey column="id" sqlStatement="JDBC"/>
+
+        </table>
+
+
     </context>
 </generatorConfiguration>

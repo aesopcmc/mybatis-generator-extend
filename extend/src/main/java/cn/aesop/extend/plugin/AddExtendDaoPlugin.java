@@ -195,7 +195,10 @@ public class AddExtendDaoPlugin extends PluginAdapter {
         List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
         StringBuilder builder = new StringBuilder();
         for (IntrospectedColumn column : allColumns) {
-            builder.append(column.getActualColumnName()).append(", ");
+            if(column.isColumnNameDelimited())
+                builder.append("`").append(column.getActualColumnName()).append("`").append(", ");
+            else
+                builder.append(column.getActualColumnName()).append(", ");
         }
         String columnsText = builder.substring(0, builder.length()-2);
 

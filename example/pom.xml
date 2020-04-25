@@ -40,7 +40,7 @@
         <mybatis.generator.overwrite>true</mybatis.generator.overwrite>
         <!--链接数据库信息-->
         <mybatis.generator.jdbcDriver>com.mysql.jdbc.Driver</mybatis.generator.jdbcDriver>
-        <mybatis.generator.jdbcURL><![CDATA[jdbc:mysql://10.0.0.107:3306/issuetracker?useUnicode=true&characterEncoding=utf8]]></mybatis.generator.jdbcURL>
+        <mybatis.generator.jdbcURL><![CDATA[jdbc:mysql://localhost:3306/issuetracker_cn?useUnicode=true&characterEncoding=utf8]]></mybatis.generator.jdbcURL>
         <mybatis.generator.jdbcUserId>root</mybatis.generator.jdbcUserId>
         <mybatis.generator.jdbcPassword>root</mybatis.generator.jdbcPassword>
         <!-- 生成Model类的位置 -->

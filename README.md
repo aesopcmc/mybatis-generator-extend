@@ -34,3 +34,4 @@
 ```
 
 github项目地址https://github.com/aesopcmc/mybatis-generator-extend
+CSDN博客地址：https://blog.csdn.net/u014438244/article/details/102776762
