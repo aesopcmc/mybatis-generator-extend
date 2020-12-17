@@ -1,7 +1,12 @@
 
-# 功能说明
+# 概述
 在项目中加入mybatis generator 插件自动mybatis实体映射文件，并对原插件进行扩展（参考extend模块），
 生成mybatis-generator-extend.jar，把jar嵌入到mybatis generator 插件中
+
+# 功能
+- 自动生成实体
+- 自动生成Dao、xxxDao.xml，可自定义sql
+- java版本1.7 
 
 # 使用步骤
 ## 1.打包extend模块：mvn clean package -pl extend
