@@ -11,17 +11,19 @@
 
     <artifactId>extend</artifactId>
 
-
+    <properties>
+        <mybatis-generator.version>1.4.0</mybatis-generator.version>
+    </properties>
     <dependencies>
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.5</version>
+            <version>${mybatis-generator.version}</version>
         </dependency>
     </dependencies>
 
     <build>
-        <finalName>mybatis-generator-extend</finalName>
+        <finalName>mybatis-generator-extend-${mybatis-generator.version}</finalName>
         <plugins>
             <!-- 打Jar包插件 -->
             <plugin>

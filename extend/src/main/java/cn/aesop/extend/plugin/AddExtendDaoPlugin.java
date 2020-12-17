@@ -56,6 +56,12 @@ public class AddExtendDaoPlugin extends PluginAdapter {
         targetPackage = properties.getProperty("targetPackage");
         targetProject = properties.getProperty("targetProject");
         targetProjectXml = properties.getProperty("targetProjectXml");
+
+        System.out.println("baseDir:"+baseDir);
+        System.out.println("targetPackage:"+targetPackage);
+        System.out.println("targetProject:"+targetProject);
+        System.out.println("targetProjectXml:"+targetProjectXml);
+
         if(baseDir==null || baseDir.trim().isEmpty()
             ||targetPackage==null || targetPackage.trim().isEmpty()
             ||targetProject==null || targetProject.trim().isEmpty()

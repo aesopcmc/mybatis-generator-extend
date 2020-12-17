@@ -3,8 +3,10 @@ package cn.aesop.extend.comment;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
 import java.util.Properties;
+import java.util.Set;
 
 /**
  * 自定义注解，加载数据库comment注解，去除默认生成的无用的注释
@@ -38,7 +40,7 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
 
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        String author = "Mybatis Generator";//properties.getProperty("author");
+        String author = "Mybatis Generator";
         // String dateFormat = properties.getProperty("dateFormat", "yyyy-MM-dd");
         // SimpleDateFormat dateFormatter = new SimpleDateFormat(dateFormat);
 
@@ -52,16 +54,53 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
         topLevelClass.addJavaDocLine(" * @author " + author);
         // topLevelClass.addJavaDocLine(" * @date " + dateFormatter.format(new Date()));
         topLevelClass.addJavaDocLine(" */");
+
+        System.out.println("=====tableName:"+tableName);
+
+        // 添加日期格式化注解JsonFormat
+        //this.addJsonFormatDate(topLevelClass, introspectedTable);
     }
 
     @Override
-    public void addFieldComment(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn) {
-        // 获取列注释
+    public void addFieldAnnotation(Field field, IntrospectedTable introspectedTable, IntrospectedColumn introspectedColumn, Set<FullyQualifiedJavaType> set) {
+        //添加字段注释
         String remarks = introspectedColumn.getRemarks();
         String columnName = introspectedColumn.getActualColumnName();
         field.addJavaDocLine("/**");
         field.addJavaDocLine(" * " + remarks);
         field.addJavaDocLine(" * " + columnName);
         field.addJavaDocLine(" */");
+
+        // 添加日期格式化注解JsonFormat
+        //if("java.time.LocalDateTime".equals(field.getType().getFullyQualifiedName())) {
+        //    field.addAnnotation("@JsonFormat(pattern = \"yyyy-MM-dd HH:mm:ss\")");
+        //}
+        //if("java.time.LocalDate".equals(field.getType().getFullyQualifiedName())) {
+        //    field.addAnnotation("@JsonFormat(pattern = \"yyyy-MM-dd\")");
+        //}
     }
+
+    /**
+     * 添加日期格式化注解JsonFormat
+     *
+     * 需要springboot web环境依赖
+     * @param topLevelClass
+     * @param introspectedTable
+     */
+    private void addJsonFormatDate(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+        boolean localDateTimeTypeFlag = false;
+        for (IntrospectedColumn baseColumn : introspectedTable.getBaseColumns()) {
+            if("java.time.LocalDateTime".equals(baseColumn.getFullyQualifiedJavaType().getFullyQualifiedName())) {
+                localDateTimeTypeFlag = true;
+            }
+            if("java.time.LocalDate".equals(baseColumn.getFullyQualifiedJavaType().getFullyQualifiedName())) {
+                localDateTimeTypeFlag = true;
+            }
+        }
+        if(localDateTimeTypeFlag) {
+            FullyQualifiedJavaType importType = new FullyQualifiedJavaType("com.fasterxml.jackson.annotation.JsonFormat");
+            topLevelClass.addImportedType(importType);
+        }
+    }
+
 }

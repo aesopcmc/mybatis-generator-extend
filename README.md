@@ -6,11 +6,14 @@
 # 功能
 - 自动生成实体
 - 自动生成Dao、xxxDao.xml，可自定义sql
+- 使用mysql dynamicSql 语句，具体语法参考： http://mybatis.org/generator/generatedobjects/dynamicSqlV2.html
 - java版本1.8
 
 # 使用步骤
 ## 1.打包extend模块：mvn clean package -pl extend
 ## 2.从target拷贝打包后的文件mybatis-generator-extend.jar 到需要的位置
+
+【以下待更新】
 ## 3.在你的项目中添加 mybatis-generator-extend.jar 插件，并指定文件生成的位置，请参考example模块
 ```xml
 
