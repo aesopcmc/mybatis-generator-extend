@@ -6,7 +6,7 @@
 # 功能
 - 自动生成实体
 - 自动生成Dao、xxxDao.xml，可自定义sql
-- java版本1.7 
+- java版本1.8
 
 # 使用步骤
 ## 1.打包extend模块：mvn clean package -pl extend
