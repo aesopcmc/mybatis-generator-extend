@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.aesop.example.dao.AdminRoleDao">
+  <!--
+    《扩展Dao操作，由Mybatis Generator插件自动生成，多次生成，不会覆盖》
+    这是一个继承自父xxxMapper.xml的配置文件，扩展的sql语句操作都放在这个文件
+    generator date：2020-12-20.
+  -->
+  <resultMap id="BaseResultMap" type="cn.aesop.example.generator.model.AdminRole">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="role_name" jdbcType="VARCHAR" property="roleName" />
+    <result column="create_user" jdbcType="INTEGER" property="createUser" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_user" jdbcType="INTEGER" property="updateUser" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+    <result column="delete_flag" jdbcType="TINYINT" property="deleteFlag" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    id, role_name, create_user, create_time, update_user, update_time, delete_flag
+  </sql>
+  <!-- 自定义 -->
+
+</mapper>

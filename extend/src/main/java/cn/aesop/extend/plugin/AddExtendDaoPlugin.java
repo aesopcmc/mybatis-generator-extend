@@ -12,7 +12,6 @@ import org.mybatis.generator.api.dom.xml.XmlElement;
 import org.mybatis.generator.codegen.XmlConstants;
 
 import java.io.File;
-import java.lang.reflect.Field;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -44,85 +43,113 @@ import java.util.List;
  */
 public class AddExtendDaoPlugin extends PluginAdapter {
     private String fileTitle="《扩展Dao操作，由Mybatis Generator插件自动生成，多次生成，不会覆盖》";
-    private String targetPackage;
-    private String targetProject;
-    private String targetProjectXml;
-    private String daoBaseName;
+    private String targetProject="src/main/java";
     private String baseDir;
+    private String targetPackage;
 
     @Override
     public boolean validate(List<String> list) {
         baseDir = properties.getProperty("baseDir");
         targetPackage = properties.getProperty("targetPackage");
-        targetProject = properties.getProperty("targetProject");
-        targetProjectXml = properties.getProperty("targetProjectXml");
 
         System.out.println("baseDir:"+baseDir);
         System.out.println("targetPackage:"+targetPackage);
-        System.out.println("targetProject:"+targetProject);
-        System.out.println("targetProjectXml:"+targetProjectXml);
 
         if(baseDir==null || baseDir.trim().isEmpty()
-            ||targetPackage==null || targetPackage.trim().isEmpty()
-            ||targetProject==null || targetProject.trim().isEmpty()
-            ||targetProjectXml==null || targetProjectXml.trim().isEmpty()) {
+            ||targetPackage==null || targetPackage.trim().isEmpty()) {
             return false;
         }
         return true;
     }
 
     @Override
-    public boolean sqlMapGenerated(GeneratedXmlFile sqlMap, IntrospectedTable introspectedTable) {
-        daoBaseName = introspectedTable.getFullyQualifiedTable().getDomainObjectName() + "Dao";
+    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
+        try{
+            String javaName = introspectedTable.getFullyQualifiedTable().getDomainObjectName() + "Dao.java";
 
-        try {
-            Field field = sqlMap.getClass().getDeclaredField("isMergeable");
-            field.setAccessible(true);
-            field.setBoolean(sqlMap, false);
-        } catch (Exception e) {
+            String targetPackagePath = targetPackage.replaceAll("\\.", "/");
+            StringBuilder filePath = new StringBuilder();
+            filePath.append(baseDir)
+                    .append(File.separator)
+                    .append(targetProject)
+                    .append(File.separator)
+                    .append(targetPackagePath)
+                    .append(File.separator)
+                    .append(javaName);
+            if(new File(filePath.toString()).exists()) {
+                System.out.println(filePath+"文件存在，不生成");
+                return new ArrayList<>();
+            }
+
+            CompilationUnit unit = generateUnit(introspectedTable);
+            // this.context.getProperty("javaFileEncoding")
+            GeneratedJavaFile gf = new GeneratedJavaFile(unit, targetProject, "utf-8", this.context.getJavaFormatter());
+            return Arrays.asList(gf);
+        }catch (Exception e) {
             e.printStackTrace();
+            throw e;
         }
-        return true;
     }
 
+    private CompilationUnit generateUnit(IntrospectedTable introspectedTable) {
+        String javaName = introspectedTable.getFullyQualifiedTable().getDomainObjectName() + "Dao";
+
+        //实体类类型
+        // String entityClazzType = introspectedTable.getBaseRecordType();
+        // xxxMapper类类型
+        String mapperInterfaceType = introspectedTable.getMyBatis3JavaMapperType();
+
+        String domainObjectName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
+
+        StringBuilder builder = new StringBuilder();
+
+        //继承接口 xxxMapper.java
+        FullyQualifiedJavaType superClassType = new FullyQualifiedJavaType(
+                builder.append(domainObjectName)
+                        .append("Mapper").toString()
+        );
+        Interface dto = new Interface(targetPackage +"."+javaName);
+        dto.addSuperInterface(superClassType);
+        dto.setVisibility(JavaVisibility.PUBLIC);
+
+        //导入xxxMapper类所在的包
+        FullyQualifiedJavaType modelJavaType = new FullyQualifiedJavaType(mapperInterfaceType);
+        dto.addImportedType(modelJavaType);
+
+        //导入注解包、并添加@Mapper注解
+        // FullyQualifiedJavaType importType = new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper");
+        // dto.addImportedType(importType);
+        // dto.addAnnotation("@Mapper");
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
+        dto.addJavaDocLine("/**\n" +
+                " * " +fileTitle+"\n"+
+                " * \n" +
+                " * @author Mybatis Generator\n" +
+                " * @date " + dateFormatter.format(new Date()) +"\n"+
+                " */");
+
+        return dto;
+    }
+
+
     @Override
-    public List<GeneratedJavaFile> contextGenerateAdditionalJavaFiles(IntrospectedTable introspectedTable) {
+    public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles(IntrospectedTable introspectedTable) {
+        String xmlName = introspectedTable.getFullyQualifiedTable().getDomainObjectName() + "Dao.xml";
+        String javaName = introspectedTable.getFullyQualifiedTable().getDomainObjectName() + "Dao";
+
         String targetPackagePath = targetPackage.replaceAll("\\.", "/");
         StringBuilder filePath = new StringBuilder();
         filePath.append(baseDir)
-            .append(File.separator)
+                .append(File.separator)
                 .append(targetProject)
                 .append(File.separator)
                 .append(targetPackagePath)
                 .append(File.separator)
-                .append(daoBaseName)
-                .append(".java");
+                .append(xmlName);
         if(new File(filePath.toString()).exists()) {
             System.out.println(filePath+"文件存在，不生成");
-            return null;
-        }
-
-        CompilationUnit unit = generateUnit(introspectedTable);
-        // this.context.getProperty("javaFileEncoding")
-        GeneratedJavaFile gf = new GeneratedJavaFile(unit, targetProject, "utf-8", this.context.getJavaFormatter());
-        return Arrays.asList(gf);
-    }
-
-    @Override
-    public List<GeneratedXmlFile> contextGenerateAdditionalXmlFiles(IntrospectedTable introspectedTable) {
-        String targetPackagePath = targetPackage.replaceAll("\\.", "/");
-        StringBuilder filePath = new StringBuilder();
-        filePath.append(baseDir)
-                .append(File.separator)
-                .append(targetProjectXml)
-                .append(File.separator)
-                .append(targetPackagePath)
-                .append(File.separator)
-                .append(daoBaseName)
-                .append(".xml");
-        if(new File(filePath.toString()).exists()) {
-            System.out.println(filePath+"文件存在，不生成");
-            return null;
+            return new ArrayList<>();
         }
 
         String domainType = introspectedTable.getBaseRecordType();
@@ -131,13 +158,11 @@ public class AddExtendDaoPlugin extends PluginAdapter {
                 XmlConstants.MYBATIS3_MAPPER_SYSTEM_ID);
         XmlElement root = new XmlElement("mapper"); //$NON-NLS-1$
         document.setRootElement(root);
-        root.addAttribute(new Attribute("namespace", targetPackage +"."+daoBaseName));
+        root.addAttribute(new Attribute("namespace", targetPackage +"."+javaName));
         root.addElement(new TextElement("<!--")); //$NON-NLS-1$
         root.addElement(new TextElement("  "+fileTitle)); //$NON-NLS-1$
         root.addElement(new TextElement(
                 "  这是一个继承自父xxxMapper.xml的配置文件，扩展的sql语句操作都放在这个文件")); //$NON-NLS-1$
-        root.addElement(new TextElement(
-                "  注意：不要使用与父mapper相同的statement（select、insert、update、delete），会被覆盖，而sql、resultMap不会覆盖")); //$NON-NLS-1$
         StringBuilder sb = new StringBuilder();
         sb.append("  generator date："); //$NON-NLS-1$
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
@@ -216,9 +241,9 @@ public class AddExtendDaoPlugin extends PluginAdapter {
         root.addElement(new TextElement("<!-- 自定义 -->\n"));
 
         GeneratedXmlFile gxf = new GeneratedXmlFile(document,
-                daoBaseName+".xml", //$NON-NLS-1$ //$NON-NLS-2$
+                xmlName, //$NON-NLS-1$ //$NON-NLS-2$
                 targetPackage, //$NON-NLS-1$
-                targetProjectXml, //$NON-NLS-1$
+                targetProject, //$NON-NLS-1$
                 false, context.getXmlFormatter());
 
         List<GeneratedXmlFile> answer = new ArrayList<>(1);
@@ -226,6 +251,7 @@ public class AddExtendDaoPlugin extends PluginAdapter {
 
         return answer;
     }
+
 
     private void addResultElement(XmlElement resultMap, String ele, String actualColumnName, String jdbcTypeName, String javaProperty) {
         XmlElement result = new XmlElement(ele);
@@ -235,43 +261,5 @@ public class AddExtendDaoPlugin extends PluginAdapter {
         resultMap.addElement(result);
     }
 
-    private CompilationUnit generateUnit(IntrospectedTable introspectedTable) {
-        //实体类类型
-        // String entityClazzType = introspectedTable.getBaseRecordType();
-        // xxxMapper类类型
-        String mapperInterfaceType = introspectedTable.getMyBatis3JavaMapperType();
-
-        String domainObjectName = introspectedTable.getFullyQualifiedTable().getDomainObjectName();
-
-        StringBuilder builder = new StringBuilder();
-
-        //继承接口 xxxMapper.java
-        FullyQualifiedJavaType superClassType = new FullyQualifiedJavaType(
-                builder.append(domainObjectName)
-                        .append("Mapper").toString()
-        );
-        Interface dto = new Interface(targetPackage +"."+daoBaseName);
-        dto.addSuperInterface(superClassType);
-        dto.setVisibility(JavaVisibility.PUBLIC);
-
-        //导入xxxMapper类所在的包
-        FullyQualifiedJavaType modelJavaType = new FullyQualifiedJavaType(mapperInterfaceType);
-        dto.addImportedType(modelJavaType);
-
-        //导入注解包、并添加@Mapper注解
-        // FullyQualifiedJavaType importType = new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper");
-        // dto.addImportedType(importType);
-        // dto.addAnnotation("@Mapper");
-
-        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
-        dto.addJavaDocLine("/**\n" +
-                " * " +fileTitle+"\n"+
-                " * \n" +
-                " * @author Mybatis Generator\n" +
-                " * @date " + dateFormatter.format(new Date()) +"\n"+
-                " */");
-
-        return dto;
-    }
 
 }

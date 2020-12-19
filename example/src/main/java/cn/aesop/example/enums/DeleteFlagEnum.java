@@ -4,15 +4,14 @@ package cn.aesop.example.enums;
  * @author Aesop(chao_c_c @ 163.com)
  * @date 2019/10/24 16:02
  */
-public enum ModelNameEnum {
-    YC(0,"粤C"),
-    YK(1,"粤K"),
-    YB(2,"粤B");
+public enum DeleteFlagEnum {
+    VALID(0,"可用"),
+    DELETE(1,"已删除");
 
     private int index;
     private String name;
 
-    ModelNameEnum(int index, String name) {
+    DeleteFlagEnum(int index, String name) {
         this.index = index;
         this.name = name;
     }
