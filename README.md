@@ -7,7 +7,7 @@ example模块是使用样例参考，extend模块是扩展源码，可直接拷�
 # 2.功能
 - 自动生成实体
 - 自动生成Dao、xxxDao.xml，可自定义sql
-- 使用mysql dynamicSql 语法语句，具体语法参考： http://mybatis.org/generator/generatedobjects/dynamicSqlV2.html
+- 使用mysql dynamicSql 语法语句
 - 要求jdk1.8及以上
 
 # 3.方式一：模块安装方式
@@ -75,7 +75,7 @@ example模块是使用样例参考，extend模块是扩展源码，可直接拷�
 
 以后每次增加表，只需更改generatorConfig.xml指定表名，执行生成，generator目录下的文件会覆盖更新，dao目录下文件不覆盖不更新
 
-## 4. 方式二：打jar包方式
+# 4.方式二：打jar包方式
 ### 4.1 打包extend模块
 `mvn clean package -pl extend`
 
@@ -144,9 +144,15 @@ example模块是使用样例参考，extend模块是扩展源码，可直接拷�
 
 以后每次增加表，只需更改generatorConfig.xml指定表名，执行生成，generator目录下的文件会覆盖更新，dao目录下文件不覆盖不更新
 
-### 5 注意要在Application启动类添加包扫描
+# 5.注意要在Application启动类添加包扫描
 `@MapperScan(basePackages = {"cn.aesop.example.dao", "cn.aesop.example.generator.mapper"})`
-# 导航
+# 6.导航
 - Github项目地址：https://github.com/aesopcmc/mybatis-generator-extend
 
-- Csdn博客地址：https://blog.csdn.net/u014438244/article/details/102776762
+- Csdn博客地址：https://blog.csdn.net/u014438244/article/details/102776762(待更新)
+
+- generatorConfig.xml官方配置文档：http://mybatis.org/generator/configreference/xmlconfig.html
+
+- DynamicSql语法： http://mybatis.org/generator/generatedobjects/dynamicSqlV2.html
+
+- mybatis-generator官方文档： http://mybatis.org/generator/index.html
