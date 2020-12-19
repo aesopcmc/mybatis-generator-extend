@@ -7,6 +7,8 @@ example模块是使用样例参考，extend模块是扩展源码，可直接拷�
 # 2.功能
 - 自动生成实体
 - 自动生成Dao、xxxDao.xml，可自定义sql
+- 自定义Jdbc类型到java类型映射
+- 实体可使用Lombok代替getter、Setter
 - 使用mysql dynamicSql 语法语句
 - 要求jdk1.8及以上
 
