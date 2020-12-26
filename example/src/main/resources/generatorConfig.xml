@@ -49,7 +49,7 @@
             <property name="useInformationSchema" value="true" />
         </jdbcConnection>
 
-        <javaTypeResolver type="cn.aesop.extend.resolver.MyJavaTypeResolverDefaultImpl">
+        <javaTypeResolver>
             <property name="forceBigDecimals" value="true"/>
             <!-- 当useJSR310Types为true时，就会jdbc对应的日期类型会转成java8中的LocateDateTime类型，如果useJSR310Types为false，则还是转成java.utils.Date类型 -->
             <property name="useJSR310Types" value="true"/>

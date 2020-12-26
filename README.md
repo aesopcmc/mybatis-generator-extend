@@ -46,7 +46,7 @@ example模块是使用样例参考，extend模块是扩展源码，可直接拷�
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.46</version>
+                        <version>8.0.22</version>
                     </dependency>
                     <dependency>
                         <groupId>cn.aesop</groupId>
@@ -116,7 +116,7 @@ example模块是使用样例参考，extend模块是扩展源码，可直接拷�
                     <dependency>
                         <groupId>mysql</groupId>
                         <artifactId>mysql-connector-java</artifactId>
-                        <version>5.1.46</version>
+                        <version>8.0.22</version>
                     </dependency>
                         <dependency>
                             <groupId>cn.aesop</groupId>
