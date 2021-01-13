@@ -80,6 +80,8 @@
         <!-- 数据库表名 -->
 
         <table tableName="admin_user">
+            <!--可选，表示在插入时后，返回主键-->
+            <generatedKey column="id" sqlStatement="MySql" identity="true"/>
             <!--自定义枚举-->
             <columnOverride column="delete_flag" javaType="cn.aesop.example.enums.DeleteFlagEnum"/>
         </table>
