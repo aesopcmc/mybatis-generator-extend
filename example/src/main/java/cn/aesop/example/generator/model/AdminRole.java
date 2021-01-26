@@ -10,9 +10,7 @@ import lombok.*;
  * @author Mybatis Generator
  */
 @Data
-public class AdminRole implements java.io.Serializable {
-    private static final long serialVersionUID = 1L;
-
+public class AdminRole {
     /**
      * 
      * id

@@ -112,15 +112,21 @@ public class AddExtendDaoPlugin extends PluginAdapter {
         dto.addSuperInterface(superClassType);
         dto.setVisibility(JavaVisibility.PUBLIC);
 
+        /*
+        导包
+        */
         //导入xxxMapper类所在的包
-        FullyQualifiedJavaType modelJavaType = new FullyQualifiedJavaType(mapperInterfaceType);
-        dto.addImportedType(modelJavaType);
-
+        dto.addImportedType(new FullyQualifiedJavaType(mapperInterfaceType));
+        //导入@Repository
+        dto.addImportedType(new FullyQualifiedJavaType("org.springframework.stereotype.Repository"));
         //导入注解包、并添加@Mapper注解
         // FullyQualifiedJavaType importType = new FullyQualifiedJavaType("org.apache.ibatis.annotations.Mapper");
         // dto.addImportedType(importType);
         // dto.addAnnotation("@Mapper");
 
+        /*
+        注释
+        */
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd");
         dto.addJavaDocLine("/**\n" +
                 " * " +fileTitle+"\n"+
@@ -128,6 +134,11 @@ public class AddExtendDaoPlugin extends PluginAdapter {
                 " * @author Mybatis Generator\n" +
                 " * @date " + dateFormatter.format(new Date()) +"\n"+
                 " */");
+
+        /*
+        注解
+         */
+        dto.addAnnotation("@Repository");
 
         return dto;
     }
