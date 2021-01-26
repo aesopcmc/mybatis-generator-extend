@@ -1,8 +1,6 @@
 package cn.aesop.example.generator.model;
 
 import java.time.LocalDateTime;
-
-import cn.aesop.example.AbstractEntity;
 import lombok.*;
 
 /**
@@ -11,9 +9,10 @@ import lombok.*;
  * 
  * @author Mybatis Generator
  */
-@Getter
-@Setter
-public class AdminRole extends AbstractEntity {
+@Data
+public class AdminRole implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * 
      * id

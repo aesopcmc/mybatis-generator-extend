@@ -11,9 +11,10 @@ import lombok.*;
  * 
  * @author Mybatis Generator
  */
-@Getter
-@Setter
-public class AdminUser extends AbstractEntity {
+@Data
+public class AdminUser extends AbstractEntity implements java.io.Serializable {
+    private static final long serialVersionUID = 1L;
+
     /**
      * 自增Id
      * id

@@ -4,7 +4,11 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
 import org.mybatis.generator.api.dom.java.TopLevelClass;
+
+import java.io.ObjectStreamClass;
+import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
@@ -59,6 +63,27 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
         topLevelClass.addJavaDocLine(" * @author " + author);
         // topLevelClass.addJavaDocLine(" * @date " + dateFormatter.format(new Date()));
         topLevelClass.addJavaDocLine(" */");
+
+
+        //添加可序列化
+        String isSerializable = introspectedTable.getTableConfigurationProperty("isSerializable");
+        if("true".equals(isSerializable)) {
+            try{
+                Field serialVersionUID = new Field("serialVersionUID", new FullyQualifiedJavaType("long"));
+                serialVersionUID.setFinal(true);
+                serialVersionUID.setStatic(true);
+                serialVersionUID.setVisibility(JavaVisibility.PRIVATE);
+                /*ObjectStreamClass c = ObjectStreamClass.lookup(topLevelClass.getType().getClass());
+                long serialID = c.getSerialVersionUID();
+                serialVersionUID.setInitializationString(serialID+"");*/
+                serialVersionUID.setInitializationString("1L");
+                topLevelClass.addField(serialVersionUID);
+
+                topLevelClass.addSuperInterface(new FullyQualifiedJavaType("java.io.Serializable"));
+            }catch (Exception e){
+                System.out.println("序列化id生成出错："+e.getMessage());
+            }
+        }
 
         System.out.println("=====tableName:"+tableName);
 

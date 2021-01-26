@@ -30,8 +30,7 @@ public class UseLombokPlugin extends PluginAdapter {
                                                  IntrospectedTable introspectedTable) {
         //该代码表示在生成class的时候，向topLevelClass添加一个@Setter和@Getter注解
         topLevelClass.addImportedType("lombok.*");
-        topLevelClass.addAnnotation("@Getter");
-        topLevelClass.addAnnotation("@Setter");
+        topLevelClass.addAnnotation("@Data");
         return super.modelBaseRecordClassGenerated(topLevelClass,
                 introspectedTable);
     }
