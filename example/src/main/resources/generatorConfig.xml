@@ -80,12 +80,16 @@
         <!-- 数据库表名 -->
 
         <table tableName="admin_user">
+            <!--可选，指定继承的类-->
+            <property name="rootClass" value="cn.aesop.example.AbstractEntity"/>
             <!--可选，表示在插入时后，返回主键-->
             <generatedKey column="id" sqlStatement="MySql" identity="true"/>
-            <!--自定义枚举-->
+            <!--可选，自定义枚举-->
             <columnOverride column="delete_flag" javaType="cn.aesop.example.enums.DeleteFlagEnum"/>
         </table>
-        <table tableName="admin_role" />
+
+        <table tableName="admin_role" >
+        </table>
 
     </context>
 </generatorConfiguration>

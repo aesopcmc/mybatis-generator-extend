@@ -38,6 +38,11 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
         this.properties.putAll(properties);
     }
 
+    /**
+     * 添加实体
+     * @param topLevelClass
+     * @param introspectedTable
+     */
     @Override
     public void addModelClassComment(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
         String author = "Mybatis Generator";

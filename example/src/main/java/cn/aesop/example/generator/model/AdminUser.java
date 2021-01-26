@@ -1,5 +1,6 @@
 package cn.aesop.example.generator.model;
 
+import cn.aesop.example.AbstractEntity;
 import cn.aesop.example.enums.DeleteFlagEnum;
 import java.time.LocalDateTime;
 import lombok.*;
@@ -12,7 +13,7 @@ import lombok.*;
  */
 @Getter
 @Setter
-public class AdminUser {
+public class AdminUser extends AbstractEntity {
     /**
      * 自增Id
      * id

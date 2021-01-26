@@ -1,6 +1,8 @@
 package cn.aesop.example.generator.model;
 
 import java.time.LocalDateTime;
+
+import cn.aesop.example.AbstractEntity;
 import lombok.*;
 
 /**
@@ -11,7 +13,7 @@ import lombok.*;
  */
 @Getter
 @Setter
-public class AdminRole {
+public class AdminRole extends AbstractEntity {
     /**
      * 
      * id

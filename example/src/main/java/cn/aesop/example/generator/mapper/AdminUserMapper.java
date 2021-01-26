@@ -4,7 +4,6 @@ import static cn.aesop.example.generator.mapper.AdminUserDynamicSqlSupport.*;
 import static org.mybatis.dynamic.sql.SqlBuilder.*;
 
 import cn.aesop.example.generator.model.AdminUser;
-import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import org.apache.ibatis.annotations.DeleteProvider;
@@ -13,6 +12,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Result;
 import org.apache.ibatis.annotations.ResultMap;
 import org.apache.ibatis.annotations.Results;
+import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.SelectProvider;
 import org.apache.ibatis.annotations.UpdateProvider;
 import org.apache.ibatis.type.JdbcType;
@@ -20,7 +20,6 @@ import org.mybatis.dynamic.sql.BasicColumn;
 import org.mybatis.dynamic.sql.delete.DeleteDSLCompleter;
 import org.mybatis.dynamic.sql.delete.render.DeleteStatementProvider;
 import org.mybatis.dynamic.sql.insert.render.InsertStatementProvider;
-import org.mybatis.dynamic.sql.insert.render.MultiRowInsertStatementProvider;
 import org.mybatis.dynamic.sql.select.CountDSLCompleter;
 import org.mybatis.dynamic.sql.select.SelectDSLCompleter;
 import org.mybatis.dynamic.sql.select.render.SelectStatementProvider;
@@ -42,10 +41,8 @@ public interface AdminUserMapper {
     int delete(DeleteStatementProvider deleteStatement);
 
     @InsertProvider(type=SqlProviderAdapter.class, method="insert")
+    @SelectKey(statement="SELECT LAST_INSERT_ID()", keyProperty="record.id", before=false, resultType=Integer.class)
     int insert(InsertStatementProvider<AdminUser> insertStatement);
-
-    @InsertProvider(type=SqlProviderAdapter.class, method="insertMultiple")
-    int insertMultiple(MultiRowInsertStatementProvider<AdminUser> multipleInsertStatement);
 
     @SelectProvider(type=SqlProviderAdapter.class, method="select")
     @ResultMap("AdminUserResult")
@@ -89,27 +86,7 @@ public interface AdminUserMapper {
 
     default int insert(AdminUser record) {
         return MyBatis3Utils.insert(this::insert, record, adminUser, c ->
-            c.map(id).toProperty("id")
-            .map(nickname).toProperty("nickname")
-            .map(username).toProperty("username")
-            .map(password).toProperty("password")
-            .map(avatar).toProperty("avatar")
-            .map(roleId).toProperty("roleId")
-            .map(lastTime).toProperty("lastTime")
-            .map(mobile).toProperty("mobile")
-            .map(loginTimes).toProperty("loginTimes")
-            .map(createUser).toProperty("createUser")
-            .map(createTime).toProperty("createTime")
-            .map(updateUser).toProperty("updateUser")
-            .map(updateTime).toProperty("updateTime")
-            .map(deleteFlag).toProperty("deleteFlag")
-        );
-    }
-
-    default int insertMultiple(Collection<AdminUser> records) {
-        return MyBatis3Utils.insertMultiple(this::insertMultiple, records, adminUser, c ->
-            c.map(id).toProperty("id")
-            .map(nickname).toProperty("nickname")
+            c.map(nickname).toProperty("nickname")
             .map(username).toProperty("username")
             .map(password).toProperty("password")
             .map(avatar).toProperty("avatar")
@@ -127,8 +104,7 @@ public interface AdminUserMapper {
 
     default int insertSelective(AdminUser record) {
         return MyBatis3Utils.insert(this::insert, record, adminUser, c ->
-            c.map(id).toPropertyWhenPresent("id", record::getId)
-            .map(nickname).toPropertyWhenPresent("nickname", record::getNickname)
+            c.map(nickname).toPropertyWhenPresent("nickname", record::getNickname)
             .map(username).toPropertyWhenPresent("username", record::getUsername)
             .map(password).toPropertyWhenPresent("password", record::getPassword)
             .map(avatar).toPropertyWhenPresent("avatar", record::getAvatar)
@@ -167,8 +143,7 @@ public interface AdminUserMapper {
     }
 
     static UpdateDSL<UpdateModel> updateAllColumns(AdminUser record, UpdateDSL<UpdateModel> dsl) {
-        return dsl.set(id).equalTo(record::getId)
-                .set(nickname).equalTo(record::getNickname)
+        return dsl.set(nickname).equalTo(record::getNickname)
                 .set(username).equalTo(record::getUsername)
                 .set(password).equalTo(record::getPassword)
                 .set(avatar).equalTo(record::getAvatar)
@@ -184,8 +159,7 @@ public interface AdminUserMapper {
     }
 
     static UpdateDSL<UpdateModel> updateSelectiveColumns(AdminUser record, UpdateDSL<UpdateModel> dsl) {
-        return dsl.set(id).equalToWhenPresent(record::getId)
-                .set(nickname).equalToWhenPresent(record::getNickname)
+        return dsl.set(nickname).equalToWhenPresent(record::getNickname)
                 .set(username).equalToWhenPresent(record::getUsername)
                 .set(password).equalToWhenPresent(record::getPassword)
                 .set(avatar).equalToWhenPresent(record::getAvatar)
