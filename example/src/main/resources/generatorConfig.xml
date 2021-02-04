@@ -47,6 +47,8 @@
                 password="${mybatis.generator.jdbcPassword}">
             <!--设置为true 才能显示类注释-->
             <property name="useInformationSchema" value="true" />
+            <!--处理把其他数据库的同名表生成下来的问题 https://www.cnblogs.com/xqz0618/p/MybatisGeneratorError.html-->
+            <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
 
         <javaTypeResolver>
