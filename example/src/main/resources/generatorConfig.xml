@@ -25,7 +25,7 @@
         <!--自定义插件-->
         <!--生成自定义Dao、xml-->
         <plugin type="cn.aesop.extend.plugin.AddExtendDaoPlugin">
-            <property name="baseDir" value="${plugin.base.dir}"/>
+            <property name="targetProject" value="${plugin.base.dir}/../${maven.module.dir}/src/main/java"/>
             <property name="targetPackage" value="${plugin.dao.package}"/>
         </plugin>
         <!--实体类使用Lombok 简化getter/setter代码-->
@@ -58,15 +58,15 @@
         </javaTypeResolver>
 
         <!-- 生成模型的包名和位置 targetProject='MAVEN' 表示生成到target目录 targetProject="src/main/java"-->
-        <javaModelGenerator targetPackage="${model.package}" targetProject="src/main/java">
+        <javaModelGenerator targetPackage="${model.package}" targetProject="${plugin.base.dir}/../${maven.module.dir}/src/main/java">
             <!--<property name="enableSubPackages" value="true"/>
             <property name="trimStrings" value="true"/>-->
         </javaModelGenerator>
 
-        <!-- 生成映射文件xml 的包名和位置 -->
-        <sqlMapGenerator targetPackage="${mapper.package}" targetProject="src/main/resources">
+        <!-- 生成映射文件xml 的包名和位置 【已废弃】-->
+        <!--<sqlMapGenerator targetPackage="${mapper.package}" targetProject="${plugin.base.dir}/../model-web/web-dao/src/main/resources">
             <property name="enableSubPackages" value="true"/>
-        </sqlMapGenerator>
+        </sqlMapGenerator>-->
 
         <!-- 生成DAO的包名和位置 -->
         <!--
@@ -75,12 +75,11 @@
             type="MIXEDMAPPER",生成基于注解的Java Model 和相应的Mapper对象
             type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
         -->
-        <javaClientGenerator type="XMLMAPPER" targetPackage="${mapper.package}" targetProject="src/main/java">
+        <javaClientGenerator type="XMLMAPPER" targetPackage="${mapper.package}" targetProject="${plugin.base.dir}/../${maven.module.dir}/src/main/java">
             <property name="enableSubPackages" value="true"/>
         </javaClientGenerator>
 
         <!-- 数据库表名 -->
-
         <table tableName="admin_user">
             <!--可选，指定继承的类-->
             <property name="rootClass" value="cn.aesop.example.AbstractEntity"/>

@@ -35,6 +35,8 @@
         <mybatis.generator.verbose>true</mybatis.generator.verbose>
         <mybatis.generator.overwrite>true</mybatis.generator.overwrite>
         <plugin.base.dir>${basedir}</plugin.base.dir>
+        <!--指定配置文件位置，以下为默认位置，可根据实际情况修改-->
+        <mybatis.generator.configurationFile>${basedir}/src/main/resources/generatorConfig.xml</mybatis.generator.configurationFile>
     </properties>
 
     <build>

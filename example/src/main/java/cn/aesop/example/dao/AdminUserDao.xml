@@ -4,7 +4,7 @@
   <!--
     《扩展Dao操作，由Mybatis Generator插件自动生成，多次生成，不会覆盖》
     这是一个继承自父xxxMapper.xml的配置文件，扩展的sql语句操作都放在这个文件
-    generator date：2020-12-20.
+    generator date：2021-03-06.
   -->
   <resultMap id="BaseResultMap" type="cn.aesop.example.generator.model.AdminUser">
     <id column="id" jdbcType="INTEGER" property="id" />

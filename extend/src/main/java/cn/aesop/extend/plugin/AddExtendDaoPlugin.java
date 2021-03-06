@@ -43,22 +43,18 @@ import java.util.List;
  */
 public class AddExtendDaoPlugin extends PluginAdapter {
     private String fileTitle="《扩展Dao操作，由Mybatis Generator插件自动生成，多次生成，不会覆盖》";
-    private String targetProject="src/main/java";
-    private String baseDir;
-    private String targetPackage;
+    private String targetProject;//输出的目录位置
+    private String targetPackage;//输出的包位置
 
     @Override
     public boolean validate(List<String> list) {
-        baseDir = properties.getProperty("baseDir");
+        targetProject = properties.getProperty("targetProject");
         targetPackage = properties.getProperty("targetPackage");
-
-        System.out.println("baseDir:"+baseDir);
-        System.out.println("targetPackage:"+targetPackage);
-
-        if(baseDir==null || baseDir.trim().isEmpty()
-            ||targetPackage==null || targetPackage.trim().isEmpty()) {
+        if(targetPackage==null || targetProject==null || targetPackage.trim().isEmpty() || targetProject.trim().isEmpty()) {
             return false;
         }
+        System.out.println("targetProject:"+targetProject);
+        System.out.println("targetPackage:"+targetPackage);
         return true;
     }
 
@@ -69,9 +65,7 @@ public class AddExtendDaoPlugin extends PluginAdapter {
 
             String targetPackagePath = targetPackage.replaceAll("\\.", "/");
             StringBuilder filePath = new StringBuilder();
-            filePath.append(baseDir)
-                    .append(File.separator)
-                    .append(targetProject)
+            filePath.append(targetProject)
                     .append(File.separator)
                     .append(targetPackagePath)
                     .append(File.separator)
@@ -151,9 +145,7 @@ public class AddExtendDaoPlugin extends PluginAdapter {
 
         String targetPackagePath = targetPackage.replaceAll("\\.", "/");
         StringBuilder filePath = new StringBuilder();
-        filePath.append(baseDir)
-                .append(File.separator)
-                .append(targetProject)
+        filePath.append(targetProject)
                 .append(File.separator)
                 .append(targetPackagePath)
                 .append(File.separator)
