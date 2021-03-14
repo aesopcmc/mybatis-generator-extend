@@ -2,10 +2,7 @@ package cn.aesop.extend.comment;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
-import org.mybatis.generator.api.dom.java.Field;
-import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
-import org.mybatis.generator.api.dom.java.JavaVisibility;
-import org.mybatis.generator.api.dom.java.TopLevelClass;
+import org.mybatis.generator.api.dom.java.*;
 
 import java.io.ObjectStreamClass;
 import java.util.Optional;
@@ -87,6 +84,16 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
 
         System.out.println("=====tableName:"+tableName);
 
+
+        /*
+        导入java8日期注解包
+        */
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("com.fasterxml.jackson.databind.annotation.JsonDeserialize"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("com.fasterxml.jackson.databind.annotation.JsonSerialize"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer"));
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer"));
+
+
         // 添加日期格式化注解JsonFormat
         //this.addJsonFormatDate(topLevelClass, introspectedTable);
     }
@@ -108,6 +115,15 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
         //if("java.time.LocalDate".equals(field.getType().getFullyQualifiedName())) {
         //    field.addAnnotation("@JsonFormat(pattern = \"yyyy-MM-dd\")");
         //}
+
+        /**
+         * 添加java8日期注解
+         */
+        if("java.time.LocalDateTime".equals(field.getType().getFullyQualifiedName())) {
+            field.addAnnotation("@JsonDeserialize(using = LocalDateTimeDeserializer.class)");
+            field.addAnnotation("@JsonSerialize(using = LocalDateTimeSerializer.class)");
+        }
+
     }
 
     /**

@@ -2,6 +2,10 @@ package cn.aesop.example.generator.model;
 
 import cn.aesop.example.AbstractEntity;
 import cn.aesop.example.enums.DeleteFlagEnum;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
+import com.fasterxml.jackson.datatype.jsr310.ser.LocalDateTimeSerializer;
 import java.time.LocalDateTime;
 import lombok.*;
 
@@ -55,6 +59,8 @@ public class AdminUser extends AbstractEntity implements java.io.Serializable {
      * 最后登录时间
      * last_time
      */
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime lastTime;
 
     /**
@@ -79,6 +85,8 @@ public class AdminUser extends AbstractEntity implements java.io.Serializable {
      * 创建时间
      * create_time
      */
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime createTime;
 
     /**
@@ -91,6 +99,8 @@ public class AdminUser extends AbstractEntity implements java.io.Serializable {
      * 修改时间
      * update_time
      */
+    @JsonDeserialize(using = LocalDateTimeDeserializer.class)
+    @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime updateTime;
 
     /**
