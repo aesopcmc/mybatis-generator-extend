@@ -8,7 +8,6 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>example</artifactId>
 
     <dependencies>
@@ -27,9 +26,31 @@
             <artifactId>mybatis-dynamic-sql</artifactId>
             <version>1.1.4</version>
         </dependency>
+
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-annotations</artifactId>
+            <version>2.9.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.9</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.datatype</groupId>
+            <artifactId>jackson-datatype-jsr310</artifactId>
+            <version>2.9.9</version>
+        </dependency>
     </dependencies>
 
     <properties>
+
         <!-- 【org.mybatis.generator插件配置参数】-->
         <!--更多参数配置请参看http://mybatis.org/generator/running/runningWithMaven.html -> Parameter Reference-->
         <mybatis.generator.verbose>true</mybatis.generator.verbose>
