@@ -4,8 +4,6 @@ import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.*;
 
-import java.io.ObjectStreamClass;
-import java.util.Optional;
 import java.util.Properties;
 import java.util.Set;
 
@@ -95,6 +93,8 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
 
 
         // 添加日期格式化注解JsonFormat
+        topLevelClass.addImportedType(new FullyQualifiedJavaType("com.fasterxml.jackson.annotation.JsonFormat"));
+
         //this.addJsonFormatDate(topLevelClass, introspectedTable);
     }
 
@@ -119,11 +119,15 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
         /**
          * 添加java8日期注解
          */
-        if("java.time.LocalDateTime".equals(field.getType().getFullyQualifiedName())) {
+        if ("java.time.LocalDateTime".equals(field.getType().getFullyQualifiedName())) {
             field.addAnnotation("@JsonDeserialize(using = LocalDateTimeDeserializer.class)");
             field.addAnnotation("@JsonSerialize(using = LocalDateTimeSerializer.class)");
-        }
 
+            field.addAnnotation("@JsonFormat(locale=\"zh\", timezone=\"GMT+8\", pattern=\"yyyy-MM-dd HH:mm:ss\")");
+        }
+        if ("java.time.LocalDate".equals(field.getType().getFullyQualifiedName())) {
+            field.addAnnotation("@JsonFormat(locale=\"zh\", timezone=\"GMT+8\", pattern=\"yyyy-MM-dd\")");
+        }
     }
 
     /**
@@ -133,20 +137,20 @@ public class MySQLCommentGenerator extends EmptyCommentGenerator {
      * @param topLevelClass
      * @param introspectedTable
      */
-    private void addJsonFormatDate(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
-        boolean localDateTimeTypeFlag = false;
-        for (IntrospectedColumn baseColumn : introspectedTable.getBaseColumns()) {
-            if("java.time.LocalDateTime".equals(baseColumn.getFullyQualifiedJavaType().getFullyQualifiedName())) {
-                localDateTimeTypeFlag = true;
-            }
-            if("java.time.LocalDate".equals(baseColumn.getFullyQualifiedJavaType().getFullyQualifiedName())) {
-                localDateTimeTypeFlag = true;
-            }
-        }
-        if(localDateTimeTypeFlag) {
-            FullyQualifiedJavaType importType = new FullyQualifiedJavaType("com.fasterxml.jackson.annotation.JsonFormat");
-            topLevelClass.addImportedType(importType);
-        }
-    }
+//    private void addJsonFormatDate(TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+//        boolean localDateTimeTypeFlag = false;
+//        for (IntrospectedColumn baseColumn : introspectedTable.getBaseColumns()) {
+//            if("java.time.LocalDateTime".equals(baseColumn.getFullyQualifiedJavaType().getFullyQualifiedName())) {
+//                localDateTimeTypeFlag = true;
+//            }
+//            if("java.time.LocalDate".equals(baseColumn.getFullyQualifiedJavaType().getFullyQualifiedName())) {
+//                localDateTimeTypeFlag = true;
+//            }
+//        }
+//        if(localDateTimeTypeFlag) {
+//            FullyQualifiedJavaType importType = new FullyQualifiedJavaType("com.fasterxml.jackson.annotation.JsonFormat");
+//            topLevelClass.addImportedType(importType);
+//        }
+//    }
 
 }
